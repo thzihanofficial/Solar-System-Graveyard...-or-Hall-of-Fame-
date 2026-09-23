@@ -24,22 +24,48 @@ export const IntroOverlay: React.FC<IntroOverlayProps> = ({ onComplete }) => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Direct unmuted playback
-    video.muted = false;
     video.volume = 1.0;
 
-    const playVideo = async () => {
+    const startPlayback = async () => {
       try {
+        // Try playing with sound unmuted
+        video.muted = false;
         await video.play();
       } catch (err) {
-        // If initial play rejects, retry unmuted play
-        video.muted = false;
-        video.volume = 1.0;
-        await video.play().catch((e) => console.error("Unmuted play error:", e));
+        // If browser blocks unmuted autoplay on refresh, play muted so video NEVER pauses
+        video.muted = true;
+        try {
+          await video.play();
+        } catch (mutedErr) {
+          console.error("Muted play error:", mutedErr);
+        }
       }
     };
 
-    playVideo();
+    startPlayback();
+
+    // On any user interaction, immediately enable sound
+    const enableSoundOnGesture = () => {
+      if (video) {
+        video.muted = false;
+        video.volume = 1.0;
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      }
+    };
+
+    window.addEventListener('click', enableSoundOnGesture);
+    window.addEventListener('touchstart', enableSoundOnGesture);
+    window.addEventListener('pointerdown', enableSoundOnGesture);
+    window.addEventListener('keydown', enableSoundOnGesture);
+
+    return () => {
+      window.removeEventListener('click', enableSoundOnGesture);
+      window.removeEventListener('touchstart', enableSoundOnGesture);
+      window.removeEventListener('pointerdown', enableSoundOnGesture);
+      window.removeEventListener('keydown', enableSoundOnGesture);
+    };
   }, []);
 
   return (
