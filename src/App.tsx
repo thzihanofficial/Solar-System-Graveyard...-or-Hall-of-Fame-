@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { IntroOverlay } from './components/IntroOverlay';
 import { Home } from './pages/Home';
 import { MoonPage } from './pages/MoonPage';
 import { MarsPage } from './pages/MarsPage';
@@ -47,14 +48,15 @@ import { KeplerTelescopePage } from './pages/deepspace/KeplerTelescopePage';
 import { JamesWebbTelescopePage } from './pages/deepspace/JamesWebbTelescopePage';
 
 export default function App() {
-  const [hash, setHash] = useState(window.location.hash);
+  const [hash, setHash] = useState('');
+  const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
-    // Reset location hash on initial app load to ensure users default to the main landing page
-    if (window.location.hash && !window.location.hash.startsWith('#/moon/') && !window.location.hash.startsWith('#/mars/') && !window.location.hash.startsWith('#/deep-space/')) {
+    // Reset location hash on initial app reload to default to Home page
+    if (window.location.hash) {
       window.location.hash = '';
-      setHash('');
     }
+    setHash('');
   }, []);
 
   useEffect(() => {
@@ -68,161 +70,56 @@ export default function App() {
     };
   }, []);
 
-  if (hash === '#/moon') {
-    return <MoonPage />;
-  }
+  const renderPage = () => {
+    if (hash === '#/moon') return <MoonPage />;
+    if (hash === '#/moon/surveyor1') return <Surveyor1Page />;
+    if (hash === '#/moon/surveyor3') return <Surveyor3Page />;
+    if (hash === '#/moon/surveyor567') return <Surveyor567Page />;
+    if (hash === '#/moon/clementine') return <ClementinePage />;
+    if (hash === '#/moon/apollo15lrv') return <Apollo15LrvPage />;
+    if (hash === '#/moon/apollo16lrv') return <Apollo16LrvPage />;
+    if (hash === '#/moon/apollo17lrv') return <Apollo17LrvPage />;
 
-  if (hash === '#/moon/surveyor1') {
-    return <Surveyor1Page />;
-  }
+    if (hash === '#/mars') return <MarsPage />;
+    if (hash === '#/mars/mariner6') return <Mariner6Page />;
+    if (hash === '#/mars/mariner7') return <Mariner7Page />;
+    if (hash === '#/mars/mariner9') return <Mariner9Page />;
+    if (hash === '#/mars/viking1and2') return <Viking1And2Page />;
+    if (hash === '#/mars/marsglobalsurveyor') return <MarsGlobalSurveyorPage />;
+    if (hash === '#/mars/marspathfinder') return <MarsPathfinderPage />;
+    if (hash === '#/mars/marsodyssey') return <MarsOdysseyPage />;
+    if (hash === '#/mars/spiritandopportunity') return <SpiritAndOpportunityPage />;
+    if (hash === '#/mars/marsreconnaissanceorbiter') return <MarsReconnaissanceOrbiterPage />;
+    if (hash === '#/mars/phoenixmarslander') return <PhoenixMarsLanderPage />;
+    if (hash === '#/mars/curiosityrover') return <CuriosityRoverPage />;
+    if (hash === '#/mars/maven') return <MavenPage />;
+    if (hash === '#/mars/insightlanders') return <InSightLandersPage />;
+    if (hash === '#/mars/mars2020') return <Mars2020Page />;
+    if (hash === '#/mars/sojourner') return <SojournerPage />;
+    if (hash === '#/mars/opportunity') return <OpportunityPage />;
+    if (hash === '#/mars/perseverance') return <PerseverancePage />;
 
-  if (hash === '#/moon/surveyor3') {
-    return <Surveyor3Page />;
-  }
+    if (hash === '#/deep-space') return <DeepSpacePage />;
+    if (hash === '#/deep-space/marinerprogram') return <MarinerProgramPage />;
+    if (hash === '#/deep-space/pioneer10and11') return <Pioneer10And11Page />;
+    if (hash === '#/deep-space/voyager1and2') return <Voyager1And2Page />;
+    if (hash === '#/deep-space/messenger') return <MessengerPage />;
+    if (hash === '#/deep-space/newhorizons') return <NewHorizonsPage />;
+    if (hash === '#/deep-space/juno') return <JunoPage />;
+    if (hash === '#/deep-space/osirisrexapex') return <OsirisRexApexPage />;
+    if (hash === '#/deep-space/tiros1') return <Tiros1Page />;
+    if (hash === '#/deep-space/hubbletelescope') return <HubbleTelescopePage />;
+    if (hash === '#/deep-space/chandraobservatory') return <ChandraObservatoryPage />;
+    if (hash === '#/deep-space/keplertelescope') return <KeplerTelescopePage />;
+    if (hash === '#/deep-space/jameswebbtelescope') return <JamesWebbTelescopePage />;
 
-  if (hash === '#/moon/surveyor567') {
-    return <Surveyor567Page />;
-  }
+    return <Home />;
+  };
 
-  if (hash === '#/moon/clementine') {
-    return <ClementinePage />;
-  }
-
-  if (hash === '#/moon/apollo15lrv') {
-    return <Apollo15LrvPage />;
-  }
-
-  if (hash === '#/moon/apollo16lrv') {
-    return <Apollo16LrvPage />;
-  }
-
-  if (hash === '#/moon/apollo17lrv') {
-    return <Apollo17LrvPage />;
-  }
-
-  if (hash === '#/mars') {
-    return <MarsPage />;
-  }
-
-  if (hash === '#/mars/mariner6') {
-    return <Mariner6Page />;
-  }
-
-  if (hash === '#/mars/mariner7') {
-    return <Mariner7Page />;
-  }
-
-  if (hash === '#/mars/mariner9') {
-    return <Mariner9Page />;
-  }
-
-  if (hash === '#/mars/viking1and2') {
-    return <Viking1And2Page />;
-  }
-
-  if (hash === '#/mars/marsglobalsurveyor') {
-    return <MarsGlobalSurveyorPage />;
-  }
-
-  if (hash === '#/mars/marspathfinder') {
-    return <MarsPathfinderPage />;
-  }
-
-  if (hash === '#/mars/marsodyssey') {
-    return <MarsOdysseyPage />;
-  }
-
-  if (hash === '#/mars/spiritandopportunity') {
-    return <SpiritAndOpportunityPage />;
-  }
-
-  if (hash === '#/mars/marsreconnaissanceorbiter') {
-    return <MarsReconnaissanceOrbiterPage />;
-  }
-
-  if (hash === '#/mars/phoenixmarslander') {
-    return <PhoenixMarsLanderPage />;
-  }
-
-  if (hash === '#/mars/curiosityrover') {
-    return <CuriosityRoverPage />;
-  }
-
-  if (hash === '#/mars/maven') {
-    return <MavenPage />;
-  }
-
-  if (hash === '#/mars/insightlanders') {
-    return <InSightLandersPage />;
-  }
-
-  if (hash === '#/mars/mars2020') {
-    return <Mars2020Page />;
-  }
-
-  if (hash === '#/mars/sojourner') {
-    return <SojournerPage />;
-  }
-
-  if (hash === '#/mars/opportunity') {
-    return <OpportunityPage />;
-  }
-
-  if (hash === '#/mars/perseverance') {
-    return <PerseverancePage />;
-  }
-
-  if (hash === '#/deep-space') {
-    return <DeepSpacePage />;
-  }
-
-  if (hash === '#/deep-space/marinerprogram') {
-    return <MarinerProgramPage />;
-  }
-
-  if (hash === '#/deep-space/pioneer10and11') {
-    return <Pioneer10And11Page />;
-  }
-
-  if (hash === '#/deep-space/voyager1and2') {
-    return <Voyager1And2Page />;
-  }
-
-  if (hash === '#/deep-space/messenger') {
-    return <MessengerPage />;
-  }
-
-  if (hash === '#/deep-space/newhorizons') {
-    return <NewHorizonsPage />;
-  }
-
-  if (hash === '#/deep-space/juno') {
-    return <JunoPage />;
-  }
-
-  if (hash === '#/deep-space/osirisrexapex') {
-    return <OsirisRexApexPage />;
-  }
-
-  if (hash === '#/deep-space/tiros1') {
-    return <Tiros1Page />;
-  }
-
-  if (hash === '#/deep-space/hubbletelescope') {
-    return <HubbleTelescopePage />;
-  }
-
-  if (hash === '#/deep-space/chandraobservatory') {
-    return <ChandraObservatoryPage />;
-  }
-
-  if (hash === '#/deep-space/keplertelescope') {
-    return <KeplerTelescopePage />;
-  }
-
-  if (hash === '#/deep-space/jameswebbtelescope') {
-    return <JamesWebbTelescopePage />;
-  }
-
-  return <Home />;
+  return (
+    <>
+      {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
+      {renderPage()}
+    </>
+  );
 }

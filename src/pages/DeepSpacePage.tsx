@@ -129,15 +129,15 @@ export const DeepSpacePage: React.FC = () => {
               className="w-full h-auto md:min-h-[360px] bg-[#222225] border-3 border-white rounded-none overflow-hidden flex flex-col-reverse md:flex-row justify-between transition-all duration-200 group shadow-[8px_8px_0px_0px_#ffffff]"
             >
               {/* Left Column: Info & Button */}
-              <div className="p-6 md:p-8 flex flex-col justify-between flex-grow md:w-1/2">
+              <div className="p-6 md:p-10 flex flex-col justify-between flex-grow md:w-1/2">
                 <div>
-                  <h3 className="text-[28px] sm:text-[36px] md:text-[40px] font-black uppercase text-white mb-2 tracking-tight leading-tight">
+                  <h3 className="text-[34px] sm:text-[44px] md:text-[50px] font-black uppercase text-white mb-3 tracking-tight leading-none">
                     {card.name}
                   </h3>
-                  <span className="text-[15px] sm:text-[16px] font-black text-[#2997ff] uppercase tracking-widest mb-4 block border-l-3 border-[#2997ff] pl-2.5 py-0.5">
+                  <span className="text-[17px] sm:text-[19px] font-black text-[#2997ff] uppercase tracking-widest mb-5 block border-l-4 border-[#2997ff] pl-3 py-0.5">
                     {card.time}
                   </span>
-                  <p className="text-[#e0e0e0] text-[18px] sm:text-[20px] md:text-[22px] font-medium leading-relaxed mb-6">
+                  <p className="text-white/90 text-[20px] sm:text-[23px] md:text-[25px] font-semibold leading-relaxed mb-6">
                     {card.desc}
                   </p>
                 </div>
@@ -145,13 +145,13 @@ export const DeepSpacePage: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <button
                     onClick={() => window.location.hash = card.hash}
-                    className="w-full sm:w-auto text-center py-3 px-6 bg-[#0066cc] hover:bg-[#0071e3] text-[14px] font-black uppercase border-2 border-white text-white shadow-[4px_4px_0px_0px_#ffffff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none cursor-pointer"
+                    className="w-full sm:w-auto text-center py-3.5 px-7 bg-[#0066cc] hover:bg-[#0071e3] text-[16px] font-black uppercase border-2 border-white text-white shadow-[4px_4px_0px_0px_#ffffff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none cursor-pointer"
                   >
                     Read My Story
                   </button>
 
                   {/* Status Badge */}
-                  <div className="flex items-center gap-2 self-start sm:self-auto px-4 py-2 bg-black border-2 border-white/60 rounded-none text-[13px] font-black uppercase tracking-wider text-white shadow-[3px_3px_0px_0px_#ffffff]">
+                  <div className="flex items-center gap-2 self-start sm:self-auto px-4.5 py-2.5 bg-black border-2 border-white/60 rounded-none text-[15px] font-black uppercase tracking-wider text-white shadow-[3px_3px_0px_0px_#ffffff]">
                     {card.time.toLowerCase().includes("present") ? (
                       <>
                         <span className="w-2.5 h-2.5 bg-emerald-500 shrink-0" />
