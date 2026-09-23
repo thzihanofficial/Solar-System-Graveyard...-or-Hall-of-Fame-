@@ -24,6 +24,7 @@ export const IntroOverlay: React.FC<IntroOverlayProps> = ({ onComplete }) => {
     const video = videoRef.current;
     if (!video) return;
 
+    // Direct unmuted playback
     video.muted = false;
     video.volume = 1.0;
 
@@ -31,9 +32,10 @@ export const IntroOverlay: React.FC<IntroOverlayProps> = ({ onComplete }) => {
       try {
         await video.play();
       } catch (err) {
-        // Fallback gracefully if browser policy blocks unmuted autoplay without showing any modal UI
-        video.muted = true;
-        await video.play().catch((e) => console.error("Autoplay error:", e));
+        // If initial play rejects, retry unmuted play
+        video.muted = false;
+        video.volume = 1.0;
+        await video.play().catch((e) => console.error("Unmuted play error:", e));
       }
     };
 
@@ -65,6 +67,7 @@ export const IntroOverlay: React.FC<IntroOverlayProps> = ({ onComplete }) => {
           onClick={handleFinish}
           className="flex items-center justify-center p-3.5 bg-black hover:bg-[#0066cc] text-[#ffffff] border-2 border-white shadow-[4px_4px_0px_0px_#2997ff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none cursor-pointer"
           aria-label="Skip Intro"
+          title="Skip Intro"
         >
           <X className="w-6 h-6 stroke-[3]" />
         </button>
