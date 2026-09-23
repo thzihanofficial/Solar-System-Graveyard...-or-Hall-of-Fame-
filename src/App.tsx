@@ -48,15 +48,33 @@ import { KeplerTelescopePage } from './pages/deepspace/KeplerTelescopePage';
 import { JamesWebbTelescopePage } from './pages/deepspace/JamesWebbTelescopePage';
 
 export default function App() {
-  const [hash, setHash] = useState('');
-  const [showIntro, setShowIntro] = useState(true);
+  const [hash, setHash] = useState(() => window.location.hash);
+  const [showIntro, setShowIntro] = useState(() => {
+    const isNewSession = !sessionStorage.getItem('sg_visited_session');
+    const currentHash = window.location.hash;
+    
+    // If it's a new tab/session, always show intro and go to home
+    if (isNewSession) {
+      return true;
+    }
+    // If reloading in the same session, only show intro if on Home page
+    return !currentHash || currentHash === '#' || currentHash === '#/';
+  });
 
   useEffect(() => {
-    // Reset location hash on initial app reload to default to Home page
-    if (window.location.hash) {
-      window.location.hash = '';
+    const isNewSession = !sessionStorage.getItem('sg_visited_session');
+    
+    if (isNewSession) {
+      // Mark session as active and reset hash to home for brand new tabs
+      sessionStorage.setItem('sg_visited_session', 'true');
+      if (window.location.hash) {
+        window.location.hash = '';
+      }
+      setHash('');
+    } else {
+      // Retain current hash on reload
+      setHash(window.location.hash);
     }
-    setHash('');
   }, []);
 
   useEffect(() => {
