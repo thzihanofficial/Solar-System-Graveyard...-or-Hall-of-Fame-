@@ -1,5 +1,5 @@
 {
-  "name": "Nothing is Impossible",
+  "name": "Solar System Graveyard... or Hall of Fame?",
   "description": "An interactive storytelling experience exploring the hardware, missions, and science made possible by NASA equipment across the Moon, Mars, and deep space.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
