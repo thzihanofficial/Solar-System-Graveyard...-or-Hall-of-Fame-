@@ -49,6 +49,9 @@ import { JamesWebbTelescopePage } from './pages/deepspace/JamesWebbTelescopePage
 
 export default function App() {
   const [hash, setHash] = useState(() => window.location.hash);
+  const [displayedHash, setDisplayedHash] = useState(() => window.location.hash);
+  const [isExiting, setIsExiting] = useState(false);
+
   const [showIntro, setShowIntro] = useState(() => {
     const isNewSession = !sessionStorage.getItem('sg_visited_session');
     const currentHash = window.location.hash;
@@ -71,9 +74,11 @@ export default function App() {
         window.location.hash = '';
       }
       setHash('');
+      setDisplayedHash('');
     } else {
       // Retain current hash on reload
       setHash(window.location.hash);
+      setDisplayedHash(window.location.hash);
     }
   }, []);
 
@@ -88,48 +93,61 @@ export default function App() {
     };
   }, []);
 
-  const renderPage = () => {
-    if (hash === '#/moon') return <MoonPage />;
-    if (hash === '#/moon/surveyor1') return <Surveyor1Page />;
-    if (hash === '#/moon/surveyor3') return <Surveyor3Page />;
-    if (hash === '#/moon/surveyor567') return <Surveyor567Page />;
-    if (hash === '#/moon/clementine') return <ClementinePage />;
-    if (hash === '#/moon/apollo15lrv') return <Apollo15LrvPage />;
-    if (hash === '#/moon/apollo16lrv') return <Apollo16LrvPage />;
-    if (hash === '#/moon/apollo17lrv') return <Apollo17LrvPage />;
+  useEffect(() => {
+    if (hash !== displayedHash) {
+      setIsExiting(true);
+      const timer = setTimeout(() => {
+        setDisplayedHash(hash);
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+        setIsExiting(false);
+      }, 120);
 
-    if (hash === '#/mars') return <MarsPage />;
-    if (hash === '#/mars/mariner6') return <Mariner6Page />;
-    if (hash === '#/mars/mariner7') return <Mariner7Page />;
-    if (hash === '#/mars/mariner9') return <Mariner9Page />;
-    if (hash === '#/mars/viking1and2') return <Viking1And2Page />;
-    if (hash === '#/mars/marsglobalsurveyor') return <MarsGlobalSurveyorPage />;
-    if (hash === '#/mars/marspathfinder') return <MarsPathfinderPage />;
-    if (hash === '#/mars/marsodyssey') return <MarsOdysseyPage />;
-    if (hash === '#/mars/spiritandopportunity') return <SpiritAndOpportunityPage />;
-    if (hash === '#/mars/marsreconnaissanceorbiter') return <MarsReconnaissanceOrbiterPage />;
-    if (hash === '#/mars/phoenixmarslander') return <PhoenixMarsLanderPage />;
-    if (hash === '#/mars/curiosityrover') return <CuriosityRoverPage />;
-    if (hash === '#/mars/maven') return <MavenPage />;
-    if (hash === '#/mars/insightlanders') return <InSightLandersPage />;
-    if (hash === '#/mars/mars2020') return <Mars2020Page />;
-    if (hash === '#/mars/sojourner') return <SojournerPage />;
-    if (hash === '#/mars/opportunity') return <OpportunityPage />;
-    if (hash === '#/mars/perseverance') return <PerseverancePage />;
+      return () => clearTimeout(timer);
+    }
+  }, [hash, displayedHash]);
 
-    if (hash === '#/deep-space') return <DeepSpacePage />;
-    if (hash === '#/deep-space/marinerprogram') return <MarinerProgramPage />;
-    if (hash === '#/deep-space/pioneer10and11') return <Pioneer10And11Page />;
-    if (hash === '#/deep-space/voyager1and2') return <Voyager1And2Page />;
-    if (hash === '#/deep-space/messenger') return <MessengerPage />;
-    if (hash === '#/deep-space/newhorizons') return <NewHorizonsPage />;
-    if (hash === '#/deep-space/juno') return <JunoPage />;
-    if (hash === '#/deep-space/osirisrexapex') return <OsirisRexApexPage />;
-    if (hash === '#/deep-space/tiros1') return <Tiros1Page />;
-    if (hash === '#/deep-space/hubbletelescope') return <HubbleTelescopePage />;
-    if (hash === '#/deep-space/chandraobservatory') return <ChandraObservatoryPage />;
-    if (hash === '#/deep-space/keplertelescope') return <KeplerTelescopePage />;
-    if (hash === '#/deep-space/jameswebbtelescope') return <JamesWebbTelescopePage />;
+  const renderPage = (currentHash: string) => {
+    if (currentHash === '#/moon') return <MoonPage />;
+    if (currentHash === '#/moon/surveyor1') return <Surveyor1Page />;
+    if (currentHash === '#/moon/surveyor3') return <Surveyor3Page />;
+    if (currentHash === '#/moon/surveyor567') return <Surveyor567Page />;
+    if (currentHash === '#/moon/clementine') return <ClementinePage />;
+    if (currentHash === '#/moon/apollo15lrv') return <Apollo15LrvPage />;
+    if (currentHash === '#/moon/apollo16lrv') return <Apollo16LrvPage />;
+    if (currentHash === '#/moon/apollo17lrv') return <Apollo17LrvPage />;
+
+    if (currentHash === '#/mars') return <MarsPage />;
+    if (currentHash === '#/mars/mariner6') return <Mariner6Page />;
+    if (currentHash === '#/mars/mariner7') return <Mariner7Page />;
+    if (currentHash === '#/mars/mariner9') return <Mariner9Page />;
+    if (currentHash === '#/mars/viking1and2') return <Viking1And2Page />;
+    if (currentHash === '#/mars/marsglobalsurveyor') return <MarsGlobalSurveyorPage />;
+    if (currentHash === '#/mars/marspathfinder') return <MarsPathfinderPage />;
+    if (currentHash === '#/mars/marsodyssey') return <MarsOdysseyPage />;
+    if (currentHash === '#/mars/spiritandopportunity') return <SpiritAndOpportunityPage />;
+    if (currentHash === '#/mars/marsreconnaissanceorbiter') return <MarsReconnaissanceOrbiterPage />;
+    if (currentHash === '#/mars/phoenixmarslander') return <PhoenixMarsLanderPage />;
+    if (currentHash === '#/mars/curiosityrover') return <CuriosityRoverPage />;
+    if (currentHash === '#/mars/maven') return <MavenPage />;
+    if (currentHash === '#/mars/insightlanders') return <InSightLandersPage />;
+    if (currentHash === '#/mars/mars2020') return <Mars2020Page />;
+    if (currentHash === '#/mars/sojourner') return <SojournerPage />;
+    if (currentHash === '#/mars/opportunity') return <OpportunityPage />;
+    if (currentHash === '#/mars/perseverance') return <PerseverancePage />;
+
+    if (currentHash === '#/deep-space') return <DeepSpacePage />;
+    if (currentHash === '#/deep-space/marinerprogram') return <MarinerProgramPage />;
+    if (currentHash === '#/deep-space/pioneer10and11') return <Pioneer10And11Page />;
+    if (currentHash === '#/deep-space/voyager1and2') return <Voyager1And2Page />;
+    if (currentHash === '#/deep-space/messenger') return <MessengerPage />;
+    if (currentHash === '#/deep-space/newhorizons') return <NewHorizonsPage />;
+    if (currentHash === '#/deep-space/juno') return <JunoPage />;
+    if (currentHash === '#/deep-space/osirisrexapex') return <OsirisRexApexPage />;
+    if (currentHash === '#/deep-space/tiros1') return <Tiros1Page />;
+    if (currentHash === '#/deep-space/hubbletelescope') return <HubbleTelescopePage />;
+    if (currentHash === '#/deep-space/chandraobservatory') return <ChandraObservatoryPage />;
+    if (currentHash === '#/deep-space/keplertelescope') return <KeplerTelescopePage />;
+    if (currentHash === '#/deep-space/jameswebbtelescope') return <JamesWebbTelescopePage />;
 
     return <Home />;
   };
@@ -137,7 +155,9 @@ export default function App() {
   return (
     <>
       {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
-      {renderPage()}
+      <div key={displayedHash} className={isExiting ? 'page-fade-out' : 'page-fade-in'}>
+        {renderPage(displayedHash)}
+      </div>
     </>
   );
 }
