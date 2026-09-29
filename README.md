@@ -5,6 +5,8 @@
 Built by team **Universe Breakers** for the **NASA Space Apps Challenge 2026**
 Challenge: *Abandoned but not Forgotten: Storytelling about NASA's Discarded Equipment on the Moon and Mars*
 
+ 
+**Live demo:** [https://solar-system-graveyard-or-hall-of-fame.vercel.app](https://solar-system-graveyard-or-hall-of-fame.vercel.app/)
 ---
 
 ## What it does
