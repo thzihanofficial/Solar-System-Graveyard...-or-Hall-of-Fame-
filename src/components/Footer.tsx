@@ -88,7 +88,7 @@ export const Footer: React.FC = () => {
             <ul className="text-[14px] leading-[2.2] text-[#ffffff] font-bold">
               <li>
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/thzihanofficial/Solar-System-Graveyard...-or-Hall-of-Fame-.git" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-[#2997ff] uppercase transition-colors inline-flex items-center space-x-1"
